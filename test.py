@@ -1,7 +1,6 @@
-x = '123'
-y = '12'
-if x != y:
-    y = x
-    print('sa')
-if x == y :
-    print('te')
+for i in range(1,5):
+    history = ''
+    content = 'bbb'
+    if history != content:
+        history = content
+        print('in')

@@ -50,9 +50,9 @@ if __name__ == '__main__':
     options.add_argument('--disable-gpu')
     browser = webdriver.Chrome(options=options)
     browser.get("https://www.zhihu.com/people/"+uid)
+    history = ''
     while(True):
         t, content = getLatestMessage(browser)
-        history = ''
         if content != history:
             sendMail(t+'    '+content)
             history = content

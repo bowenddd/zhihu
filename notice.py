@@ -6,6 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import  Header
 import time
+import datetime
 def getLatestMessage(browser):
     try:
         element = WebDriverWait(browser,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'.ListShortcut')))
@@ -24,7 +25,7 @@ def getLatestMessage(browser):
 def sendMail(content):
     mail_host = 'smtp.xxx.com'
     mail_user = 'xxx@xxx.com'
-    mail_pass = '*********'
+    mail_pass = '**********'
 
     sender = 'xxx@xxx.com'
     receivers = ['xxx@xxx.com']
@@ -46,8 +47,8 @@ if __name__ == '__main__':
     uid = 'xxx'
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-gpu')
+    # options.add_argument('--no-sandbox')
+    # options.add_argument('--disable-gpu')
     browser = webdriver.Chrome(options=options)
     browser.get("https://www.zhihu.com/people/"+uid)
     history = ''
@@ -56,6 +57,10 @@ if __name__ == '__main__':
         if content != history:
             sendMail(t+'    '+content)
             history = content
-        time.sleep(4*60*60)
+        now = datetime.datetime.now().hour
+        if(now < 8):
+            time.sleep((8-now)*60*60)
+        else:
+            time.sleep(2*60*60)
         browser.refresh()
 

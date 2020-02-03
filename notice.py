@@ -18,20 +18,20 @@ def getLatestMessage(browser):
     title = message.find_element_by_class_name('ContentItem-title').text
     print(t)
     print(option+":"+title)
-    content = t+"    "+option+":"+title
+    content = option+":"+title
     return t,content
 
 def sendMail(content):
     mail_host = 'smtp.xxx.com'
-    mail_user = 'xxx@163.com'
+    mail_user = 'xxx@xxx.com'
     mail_pass = '*********'
 
-    sender = 'xxx@163.com'
-    receivers = ['xxx@qq.com']
+    sender = 'xxx@xxx.com'
+    receivers = ['xxx@xxx.com']
     message = MIMEText(content,'plain','utf-8')
 
-    message['From'] = 'xxx@163.com'
-    message['To'] = 'xxx@qq.com'
+    message['From'] = sender
+    message['To'] = receivers[0]
     subject = '知乎动态更新！'
     message['Subject'] = Header(subject,'utf-8')
     try:
@@ -52,9 +52,10 @@ if __name__ == '__main__':
     browser.get("https://www.zhihu.com/people/"+uid)
     while(True):
         t, content = getLatestMessage(browser)
-        tlist = ['刚刚','1 小时前','2 小时前','3 小时前','4 小时前','5 小时前']
-        if t in tlist:
-            sendMail(content)
+        history = ''
+        if content != history:
+            sendMail(t+'    '+content)
+            history = content
         time.sleep(4*60*60)
         browser.refresh()
 
